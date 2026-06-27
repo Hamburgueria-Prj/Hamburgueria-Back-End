@@ -10,6 +10,87 @@ Sistema de gestão para hamburgueria com módulos de Cardápio, Pedidos e Dashbo
 
 ---
 
+## 🚀 Configuração Inicial — Faça isso uma única vez
+
+> Todo membro do time precisa seguir esses passos antes de começar a trabalhar.
+
+---
+
+### 👉 Já tem o Git instalado?
+
+Se você já usa Git, **pula o passo 2 e o passo 4**. Só confere se seu nome e e-mail já estão configurados:
+
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+Se retornar seus dados corretamente, seu fluxo é só este:
+
+1. ✅ Aceita o convite do e-mail
+2. ✅ `git clone` da URL do repositório
+3. ✅ Cria a branch de trabalho
+
+---
+
+### 1. Aceite o convite do repositório
+
+Vai chegar um e-mail do GitHub com o convite. Clica em **Accept invitation**.
+
+### 2. Instale o Git na sua máquina — pule se já tiver
+
+- **Windows:** baixa em [git-scm.com](https://git-scm.com) e instala com as opções padrão
+- **Mac:** abre o terminal e roda `git --version` — se não tiver, ele instala automaticamente
+- **Linux:** `sudo apt install git`
+
+### 3. Clone o repositório (cria a pasta local)
+
+Abre o terminal (ou Git Bash no Windows) e escolhe onde quer salvar o projeto — por exemplo, na pasta `Documentos`:
+
+```bash
+cd Documentos
+git clone https://github.com/SEU-USUARIO/hamburgueria-local.git
+```
+
+> Substitui `SEU-USUARIO` pelo usuário real do dono do repositório.  
+> Esse comando vai **criar uma pasta chamada `hamburgueria-local`** no seu computador com todos os arquivos do projeto.
+
+### 4. Configure sua identidade no Git — pule se já tiver feito
+
+Verifica primeiro se já está configurado:
+
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+Se não retornar nada, configura agora:
+
+```bash
+cd hamburgueria-local
+git config user.name "Seu Nome"
+git config user.email "seu@email.com"
+```
+
+### 5. Crie sua branch de trabalho
+
+```bash
+git checkout develop
+git checkout -b feature/SUA-TAREFA
+```
+
+Substitui `SUA-TAREFA` pela sua tarefa:
+
+| Dev | Comando |
+|-----|---------|
+| Devs 1 e 2 | `git checkout -b feature/cardapio` |
+| Devs 3 e 4 | `git checkout -b feature/pedidos` |
+| Devs 5 e 6 | `git checkout -b feature/dashboard` |
+
+✅ **Pronto! Sua pasta local está configurada e você já está na branch certa.**
+
+---
+
 ## 🌿 Estrutura de Branches
 
 ```
@@ -149,4 +230,3 @@ git diff
 ## ❓ Dúvida?
 
 Chame no grupo antes de forçar qualquer push! 💬
-
