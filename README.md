@@ -229,4 +229,4 @@ git diff
 
 ## ❓ Dúvida?
 
-Chame no grupo antes de forçar qualquer push! 💬
+Chame no grupo antes de forçar qualquer push! 
