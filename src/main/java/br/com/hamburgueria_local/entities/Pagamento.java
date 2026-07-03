@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import br.com.hamburgueria_local.enums.FormaPagamento;
 import br.com.hamburgueria_local.enums.StatusPagamento;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,7 +17,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "pagamento")
+@Table(name = "pagamentos")
 public class Pagamento {
 
 	@Id
@@ -24,20 +25,42 @@ public class Pagamento {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "pedido_id", nullable = false)
+	@JoinColumn(name = "pedido_id", nullable = false,unique = true) 
 	private Pedido pedido;
 
-	@Enumerated(EnumType.STRING)
-	private StatusPagamento status;
-
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) @Column(name = "forma_agamento", nullable = false)
 	private FormaPagamento formaPagamento;
 
-	private BigDecimal valor;
-
-	private LocalDateTime dataCriacao = LocalDateTime.now();
-
+	@Enumerated(EnumType.STRING) @Column(name = "status_pagamento", nullable = false)
+	private StatusPagamento statusPagamento = StatusPagamento.PENDENTE;
+	
+	@Column(name = "valor_pago", precision = 10, scale = 2)
+	private BigDecimal valoPagor;
+	
+	@Column ( name = "troco_para", precision = 10, scale = 2)
+	private BigDecimal trocoPara;
+	
+	@Column (precision = 10, scale = 2)
+	private BigDecimal troco;
+	
+	@Column (name = "data_pagamento")
+	private LocalDateTime dataPagamento;
+	
 	public Pagamento() {
+		
+	}
+
+	public Pagamento(Long id, Pedido pedido, FormaPagamento formaPagamento, StatusPagamento statusPagamento,
+			BigDecimal valoPagor, BigDecimal trocoPara, BigDecimal troco, LocalDateTime dataPagamento) {
+		super();
+		this.id = id;
+		this.pedido = pedido;
+		this.formaPagamento = formaPagamento;
+		this.statusPagamento = statusPagamento;
+		this.valoPagor = valoPagor;
+		this.trocoPara = trocoPara;
+		this.troco = troco;
+		this.dataPagamento = dataPagamento;
 	}
 
 	public Long getId() {
@@ -56,14 +79,6 @@ public class Pagamento {
 		this.pedido = pedido;
 	}
 
-	public StatusPagamento getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusPagamento status) {
-		this.status = status;
-	}
-
 	public FormaPagamento getFormaPagamento() {
 		return formaPagamento;
 	}
@@ -72,19 +87,46 @@ public class Pagamento {
 		this.formaPagamento = formaPagamento;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public StatusPagamento getStatusPagamento() {
+		return statusPagamento;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setStatusPagamento(StatusPagamento statusPagamento) {
+		this.statusPagamento = statusPagamento;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public BigDecimal getValoPagor() {
+		return valoPagor;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	public void setValoPagor(BigDecimal valoPagor) {
+		this.valoPagor = valoPagor;
 	}
+
+	public BigDecimal getTrocoPara() {
+		return trocoPara;
+	}
+
+	public void setTrocoPara(BigDecimal trocoPara) {
+		this.trocoPara = trocoPara;
+	}
+
+	public BigDecimal getTroco() {
+		return troco;
+	}
+
+	public void setTroco(BigDecimal troco) {
+		this.troco = troco;
+	}
+
+	public LocalDateTime getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(LocalDateTime dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+	
+	
+
 }
