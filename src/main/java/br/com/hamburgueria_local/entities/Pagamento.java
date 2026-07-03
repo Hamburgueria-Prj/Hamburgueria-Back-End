@@ -35,7 +35,7 @@ public class Pagamento {
 	private StatusPagamento statusPagamento = StatusPagamento.PENDENTE;
 	
 	@Column(name = "valor_pago", precision = 10, scale = 2)
-	private BigDecimal valoPagor;
+	private BigDecimal valorPago;
 	
 	@Column ( name = "troco_para", precision = 10, scale = 2)
 	private BigDecimal trocoPara;
@@ -51,13 +51,13 @@ public class Pagamento {
 	}
 
 	public Pagamento(Long id, Pedido pedido, FormaPagamento formaPagamento, StatusPagamento statusPagamento,
-			BigDecimal valoPagor, BigDecimal trocoPara, BigDecimal troco, LocalDateTime dataPagamento) {
+			BigDecimal valorPago, BigDecimal trocoPara, BigDecimal troco, LocalDateTime dataPagamento) {
 		super();
 		this.id = id;
 		this.pedido = pedido;
 		this.formaPagamento = formaPagamento;
 		this.statusPagamento = statusPagamento;
-		this.valoPagor = valoPagor;
+		this.valorPago = valorPago;
 		this.trocoPara = trocoPara;
 		this.troco = troco;
 		this.dataPagamento = dataPagamento;
@@ -95,12 +95,12 @@ public class Pagamento {
 		this.statusPagamento = statusPagamento;
 	}
 
-	public BigDecimal getValoPagor() {
-		return valoPagor;
+	public BigDecimal getValorPago() {
+		return valorPago;
 	}
 
-	public void setValoPagor(BigDecimal valoPagor) {
-		this.valoPagor = valoPagor;
+	public void setValorPago(BigDecimal valoPagor) {
+		this.valorPago = valoPagor;
 	}
 
 	public BigDecimal getTrocoPara() {

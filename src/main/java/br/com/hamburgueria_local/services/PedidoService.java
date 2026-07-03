@@ -10,14 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.hamburgueria_local.dto.request.ItemPedidoRequest;
 import br.com.hamburgueria_local.dto.request.PedidoRequest;
 import br.com.hamburgueria_local.dto.response.ItemPedidoResponse;
-import br.com.hamburgueria_local.dto.response.PagamentoResponse;
 import br.com.hamburgueria_local.dto.response.PedidoResponse;
 import br.com.hamburgueria_local.entities.Cliente;
 import br.com.hamburgueria_local.entities.ItemPedido;
-import br.com.hamburgueria_local.entities.Pagamento;
 import br.com.hamburgueria_local.entities.Pedido;
 import br.com.hamburgueria_local.entities.Produto;
-import br.com.hamburgueria_local.enums.StatusPagamento;
 import br.com.hamburgueria_local.enums.StatusPedido;
 import br.com.hamburgueria_local.exceptions.PedidoCanceladoException;
 import br.com.hamburgueria_local.exceptions.PedidoSemItensException;
@@ -71,7 +68,7 @@ public class PedidoService {
 			item.setProduto(produto);
 			item.setQuantidade(itemRequest.getQuantidade());
 			item.setPrecoUnitario(precoAtual);
-			item.setSubtotalItem(subtotalItem);
+			item.setSubtotal(subtotalItem);
 
 			itens.add(item);
 			subtotal = subtotal.add(subtotalItem);
@@ -80,18 +77,10 @@ public class PedidoService {
 		pedido.setItens(itens);
 		pedido.setSubtotal(subtotal);
 
-		BigDecimal desconto = BigDecimal.ZERO; 
+		BigDecimal desconto = BigDecimal.ZERO;
 		pedido.setDesconto(desconto);
-		pedido.setValorTotal(subtotal.subtract(desconto));
+		pedido.setTotal(subtotal.subtract(desconto));
 		pedido.setStatus(StatusPedido.RECEBIDO);
-
-		Pagamento pagamento = new Pagamento();
-		pagamento.setPedido(pedido);
-		pagamento.setFormaPagamento(request.getFormaPagamento());
-		pagamento.setValor(pedido.getValorTotal());
-		pagamento.setStatus(StatusPagamento.PENDENTE);
-
-		pedido.setPagamento(pagamento);
 
 		Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
@@ -121,33 +110,28 @@ public class PedidoService {
 
 		List<ItemPedidoResponse> itensResponse = new ArrayList<>();
 		for (ItemPedido item : pedido.getItens()) {
-			itensResponse.add(new ItemPedidoResponse(
-					item.getProduto().getId(),
-					item.getProduto().getNome(),
-					item.getQuantidade(),
-					item.getPrecoUnitario(),
-					item.getSubtotalItem()));
+			ItemPedidoResponse itemResponse = new ItemPedidoResponse();
+			itemResponse.setProdutoId(item.getProduto().getId());
+			itemResponse.setNomeProduto(item.getProduto().getNome());
+			itemResponse.setQuantidade(item.getQuantidade());
+			itemResponse.setPrecoUnitario(item.getPrecoUnitario());
+			itemResponse.setSubtotalItem(item.getSubtotal());
+			itensResponse.add(itemResponse);
 		}
 
-		PagamentoResponse pagamentoResponse = null;
-		if (pedido.getPagamento() != null) {
-			pagamentoResponse = new PagamentoResponse(
-					pedido.getPagamento().getId(),
-					pedido.getPagamento().getStatus(),
-					pedido.getPagamento().getFormaPagamento(),
-					pedido.getPagamento().getValor());
-		}
+		PedidoResponse response = new PedidoResponse();
+		response.setId(pedido.getId());
+		response.setClienteId(pedido.getCliente().getId());
+		response.setStatus(pedido.getStatus());
+		response.setTipoPedido(pedido.getTipoPedido());
+		response.setSubtotal(pedido.getSubtotal());
+		response.setDesconto(pedido.getDesconto());
+		response.setValorTotal(pedido.getTotal());
+		response.setDataCriacao(pedido.getDataPedido());
+		response.setItens(itensResponse);
+		// pagamento fica null aqui de proposito - ele e criado depois,
+		// num fluxo separado, pelo PagamentoController/PagamentoService
 
-		return new PedidoResponse(
-				pedido.getId(),
-				pedido.getCliente().getId(),
-				pedido.getStatus(),
-				pedido.getTipoPedido(),
-				pedido.getSubtotal(),
-				pedido.getDesconto(),
-				pedido.getValorTotal(),
-				pedido.getDataCriacao(),
-				itensResponse,
-				pagamentoResponse);
+		return response;
 	}
 }
