@@ -2,6 +2,7 @@ package br.com.hamburgueria_local.dto.response;
 
 import java.time.LocalDateTime;
 
+import br.com.hamburgueria_local.entities.Usuario;
 import br.com.hamburgueria_local.enums.PerfilUsuario;
 
 public class UsuarioResponse {
@@ -25,17 +26,14 @@ public class UsuarioResponse {
 		}
 
 
-		public UsuarioResponse(String nome, String email, String senha, PerfilUsuario perfil, Boolean ativo,
-				LocalDateTime dataCadastro) {
-			super();
-			this.nome = nome;
-			this.email = email;
-			this.senha = senha;
-			this.perfil = perfil;
-			this.ativo = ativo;
-			this.dataCadastro = dataCadastro;
+	    public UsuarioResponse(Usuario usuario) {
+			this.nome = usuario.getNome();
+			this.email = usuario.getEmail();
+			this.senha = usuario.getSenha();
+			this.perfil = usuario.getPerfil();
+			this.ativo = usuario.getAtivo();
+			this.dataCadastro = usuario.getDataCadastro();
 		}
-
 
 		public String getNome() {
 			return nome;

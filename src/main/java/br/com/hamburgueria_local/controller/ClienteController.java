@@ -42,7 +42,8 @@ public class ClienteController {
     public ResponseEntity<ClienteResponse> atualizar(
             @PathVariable Long id,
             @Valid @RequestBody ClienteRequest request
-    ) {
+    ) 
+    {
         ClienteResponse cliente = service.atualizar(id, request);
         return ResponseEntity.ok(cliente);
     }
