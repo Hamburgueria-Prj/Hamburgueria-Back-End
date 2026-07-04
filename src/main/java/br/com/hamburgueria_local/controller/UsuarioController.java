@@ -7,7 +7,7 @@ import br.com.hamburgueria_local.dto.request.UsuarioRequest;
 import br.com.hamburgueria_local.entities.Usuario;
 import br.com.hamburgueria_local.services.UsuarioService;
 import jakarta.validation.Valid;
-import br.com.hamburgueria_local.enums.PerfilUsuario;
+
 
 @RestController
 @RequestMapping("/usuario")
