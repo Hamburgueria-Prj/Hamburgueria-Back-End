@@ -15,6 +15,7 @@ import br.com.hamburgueria_local.entities.Cliente;
 import br.com.hamburgueria_local.entities.ItemPedido;
 import br.com.hamburgueria_local.entities.Pedido;
 import br.com.hamburgueria_local.entities.Produto;
+import br.com.hamburgueria_local.entities.Usuario;
 import br.com.hamburgueria_local.enums.StatusPedido;
 import br.com.hamburgueria_local.exceptions.PedidoCanceladoException;
 import br.com.hamburgueria_local.exceptions.PedidoSemItensException;
@@ -22,6 +23,7 @@ import br.com.hamburgueria_local.exceptions.RecursoNaoEncontradoException;
 import br.com.hamburgueria_local.repositories.ClienteRepository;
 import br.com.hamburgueria_local.repositories.PedidoRepository;
 import br.com.hamburgueria_local.repositories.ProdutoRepository;
+import br.com.hamburgueria_local.repositories.UsuarioRepository;
 
 @Service
 public class PedidoService {
@@ -29,27 +31,35 @@ public class PedidoService {
 	private final PedidoRepository pedidoRepository;
 	private final ClienteRepository clienteRepository;
 	private final ProdutoRepository produtoRepository;
+	private final UsuarioRepository usuarioRepository;
 
 	public PedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository,
-			ProdutoRepository produtoRepository) {
+			ProdutoRepository produtoRepository, UsuarioRepository usuarioRepository) {
 		this.pedidoRepository = pedidoRepository;
 		this.clienteRepository = clienteRepository;
 		this.produtoRepository = produtoRepository;
+		this.usuarioRepository = usuarioRepository;
+		
 	}
 
 	@Transactional
 	public PedidoResponse criar(PedidoRequest request) {
-
+		
 		if (request.getItens() == null || request.getItens().isEmpty()) {
 			throw new PedidoSemItensException("O pedido deve conter pelo menos um item.");
 		}
 
 		Cliente cliente = clienteRepository.findById(request.getClienteId())
-				.orElseThrow(() -> new RecursoNaoEncontradoException(
-						"Cliente não encontrado com id: " + request.getClienteId()));
+		        .orElseThrow(() -> new RecursoNaoEncontradoException(
+		                "Cliente não encontrado com id: " + request.getClienteId()));
+
+		Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+		        .orElseThrow(() -> new RecursoNaoEncontradoException(
+		                "Usuário não encontrado com id: " + request.getUsuarioId()));
 
 		Pedido pedido = new Pedido();
 		pedido.setCliente(cliente);
+		pedido.setUsuario(usuario);
 		pedido.setTipoPedido(request.getTipoPedido());
 
 		List<ItemPedido> itens = new ArrayList<>();
@@ -129,8 +139,7 @@ public class PedidoService {
 		response.setValorTotal(pedido.getTotal());
 		response.setDataCriacao(pedido.getDataPedido());
 		response.setItens(itensResponse);
-		// pagamento fica null aqui de proposito - ele e criado depois,
-		// num fluxo separado, pelo PagamentoController/PagamentoService
+
 
 		return response;
 	}

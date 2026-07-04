@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 @Entity @Table(name = "pedidos")
@@ -30,6 +32,7 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido = LocalDateTime.now();
     @Column(name = "data_atualizacao")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataAtualizacao;
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens;

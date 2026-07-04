@@ -3,8 +3,11 @@ package br.com.hamburgueria_local.entities;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "clientes")
+
 public class Cliente {
 
     @Id
@@ -24,6 +27,7 @@ public class Cliente {
     private Boolean ativo = true;
 
     @Column(name = "data_cadastro")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
     public Cliente() {

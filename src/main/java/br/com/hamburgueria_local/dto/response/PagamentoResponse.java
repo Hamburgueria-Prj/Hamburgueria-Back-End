@@ -3,6 +3,8 @@ package br.com.hamburgueria_local.dto.response;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.hamburgueria_local.enums.FormaPagamento;
 import br.com.hamburgueria_local.enums.StatusPagamento;
 
@@ -14,6 +16,7 @@ import br.com.hamburgueria_local.enums.StatusPagamento;
 	    private BigDecimal valorPago;
 	    private BigDecimal trocoPara;
 	    private BigDecimal troco;
+	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	    private LocalDateTime dataPagamento;
 
 	    public PagamentoResponse() {

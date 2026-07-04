@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.hamburgueria_local.enums.StatusPedido;
 import br.com.hamburgueria_local.enums.TipoPedido;
 
@@ -16,6 +18,7 @@ public class PedidoResponse {
 	private BigDecimal subtotal;
 	private BigDecimal desconto;
 	private BigDecimal valorTotal;
+	  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataCriacao;
 	private List<ItemPedidoResponse> itens;
 	private PagamentoResponse pagamento;

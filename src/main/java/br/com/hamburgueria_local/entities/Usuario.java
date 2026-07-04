@@ -4,6 +4,8 @@ import br.com.hamburgueria_local.enums.PerfilUsuario;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity @Table(name = "usuarios")
 public class Usuario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,7 @@ public class Usuario {
     @Column(nullable = false)
     private Boolean ativo = true;
     @Column(name = "data_cadastro")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
     public Usuario() {

@@ -4,6 +4,8 @@ import br.com.hamburgueria_local.entities.Cliente;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ClienteResponse {
 
     private Long id;
@@ -11,6 +13,7 @@ public class ClienteResponse {
     private String telefone;
     private String endereco;
     private Boolean ativo;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataCadastro;
 
     public ClienteResponse() {

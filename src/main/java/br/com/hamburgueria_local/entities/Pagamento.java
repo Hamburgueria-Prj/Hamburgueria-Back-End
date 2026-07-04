@@ -3,6 +3,8 @@ package br.com.hamburgueria_local.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.hamburgueria_local.enums.FormaPagamento;
 import br.com.hamburgueria_local.enums.StatusPagamento;
 import jakarta.persistence.Column;
@@ -44,6 +46,7 @@ public class Pagamento {
 	private BigDecimal troco;
 	
 	@Column (name = "data_pagamento")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataPagamento;
 	
 	public Pagamento() {
