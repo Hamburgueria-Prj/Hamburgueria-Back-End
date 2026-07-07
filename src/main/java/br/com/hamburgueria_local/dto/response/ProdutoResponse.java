@@ -13,6 +13,7 @@ public class ProdutoResponse {
     private BigDecimal preco;
     private CategoriaProduto categoria;
     private Boolean ativo;
+    private String imagemBase64;
 
     public ProdutoResponse() {
     }
@@ -24,6 +25,7 @@ public class ProdutoResponse {
         this.preco = produto.getPreco();
         this.categoria = produto.getCategoria();
         this.ativo = produto.getAtivo();
+        this.imagemBase64 = produto.getImagemBase64();
     }
 
     public Long getId() {
@@ -50,6 +52,10 @@ public class ProdutoResponse {
         return ativo;
     }
 
+    public String getImagemBase64() {
+        return imagemBase64;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -72,5 +78,9 @@ public class ProdutoResponse {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public void setImagemBase64(String imagemBase64) {
+        this.imagemBase64 = imagemBase64;
     }
 }

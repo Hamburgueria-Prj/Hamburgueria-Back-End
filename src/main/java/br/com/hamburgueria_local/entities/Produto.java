@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "produtos")
+@Table(name = "produtos", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_produtos_nome_categoria", columnNames = {"nome", "categoria"})
+})
 public class Produto {
 
     @Id
@@ -29,6 +31,10 @@ public class Produto {
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    @Lob
+    @Column(name = "imagem_base64", columnDefinition = "LONGTEXT")
+    private String imagemBase64;
+
     public Produto() {
     }
 
@@ -39,6 +45,16 @@ public class Produto {
         this.preco = preco;
         this.categoria = categoria;
         this.ativo = ativo;
+    }
+
+    public Produto(Long id, String nome, String descricao, BigDecimal preco, CategoriaProduto categoria, Boolean ativo, String imagemBase64) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.categoria = categoria;
+        this.ativo = ativo;
+        this.imagemBase64 = imagemBase64;
     }
 
     public Long getId() {
@@ -91,5 +107,13 @@ public class Produto {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public String getImagemBase64() {
+        return imagemBase64;
+    }
+
+    public void setImagemBase64(String imagemBase64) {
+        this.imagemBase64 = imagemBase64;
     }
 }

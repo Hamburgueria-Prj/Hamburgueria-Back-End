@@ -1,29 +1,27 @@
 package br.com.hamburgueria_local.dto.response;
 
-import java.time.LocalDateTime;
-
 import br.com.hamburgueria_local.entities.Usuario;
 import br.com.hamburgueria_local.enums.PerfilUsuario;
 
-public class UsuarioResponse {
+public class AuthResponse {
 
     private Long id;
     private String nome;
     private String email;
     private PerfilUsuario perfil;
-    private Boolean ativo = true;
-    private LocalDateTime dataCadastro = LocalDateTime.now();
+    private Boolean ativo;
+    private String mensagem;
 
-    public UsuarioResponse() {
+    public AuthResponse() {
     }
 
-    public UsuarioResponse(Usuario usuario) {
+    public AuthResponse(Usuario usuario, String mensagem) {
         this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.perfil = usuario.getPerfil();
         this.ativo = usuario.getAtivo();
-        this.dataCadastro = usuario.getDataCadastro();
+        this.mensagem = mensagem;
     }
 
     public Long getId() {
@@ -66,11 +64,11 @@ public class UsuarioResponse {
         this.ativo = ativo;
     }
 
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
+    public String getMensagem() {
+        return mensagem;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 }

@@ -269,3 +269,32 @@ git diff
 ```
 
 > 💬 **Chame no grupo antes de forçar qualquer push!**
+
+## Configuracao local do MySQL
+
+Este projeto ja vem com `src/main/resources/application.properties` configurado para MySQL local:
+
+- Banco: `hamburgueria`
+- Usuario: `root`
+- Senha: vazia por padrao
+- Porta backend: `8080`
+
+Se seu MySQL tiver senha, altere esta linha:
+
+```properties
+spring.datasource.password=SUA_SENHA
+```
+
+Ou rode usando variaveis de ambiente:
+
+```bash
+DATABASE_USERNAME=root DATABASE_PASSWORD=sua_senha ./mvnw spring-boot:run
+```
+
+No Windows PowerShell:
+
+```powershell
+$env:DATABASE_USERNAME="root"
+$env:DATABASE_PASSWORD="sua_senha"
+./mvnw spring-boot:run
+```

@@ -1,20 +1,23 @@
 package br.com.hamburgueria_local.dto.request;
 
-import br.com.hamburgueria_local.entities.Usuario;
 import br.com.hamburgueria_local.enums.PerfilUsuario;
-
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UsuarioRequest {
-	@NotBlank private String nome;
-    @NotBlank @Email(message = "Email invalido") private String email;
-    @NotBlank @Size(min = 6, message = "Senha deve ter ao menos 6 caracteres")
+    @NotBlank(message = "Nome é obrigatório")
+    private String nome;
+
+    @NotBlank(message = "E-mail é obrigatório")
+    @Email(message = "E-mail inválido")
+    private String email;
+
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 6, message = "Senha deve ter ao menos 6 caracteres")
     private String senha;
-    @NotNull private PerfilUsuario perfil;
+
+    private PerfilUsuario perfil;
 
     public UsuarioRequest() {
     }
@@ -27,6 +30,4 @@ public class UsuarioRequest {
     public void setSenha(String senha) { this.senha = senha; }
     public PerfilUsuario getPerfil() { return perfil; }
     public void setPerfil(PerfilUsuario perfil) { this.perfil = perfil; }
-
-
 }

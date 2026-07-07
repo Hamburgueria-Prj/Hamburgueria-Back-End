@@ -1,6 +1,5 @@
 package br.com.hamburgueria_local.services;
 
-
 import br.com.hamburgueria_local.dto.request.ProdutoRequest;
 import br.com.hamburgueria_local.dto.response.ProdutoResponse;
 import br.com.hamburgueria_local.entities.Produto;
@@ -19,17 +18,32 @@ public class ProdutoService {
     }
 
     public ProdutoResponse salvar(ProdutoRequest dto) {
-        Produto produto = new Produto();
+        String nomeNormalizado = dto.getNome().trim();
 
-        produto.setNome(dto.getNome());
-        produto.setDescricao(dto.getDescricao());
-        produto.setPreco(dto.getPreco());
-        produto.setCategoria(dto.getCategoria());
-        produto.setAtivo(true);
+        return repository.findByNomeIgnoreCaseAndCategoria(nomeNormalizado, dto.getCategoria())
+                .map(produtoExistente -> {
+                    produtoExistente.setDescricao(dto.getDescricao());
+                    produtoExistente.setPreco(dto.getPreco());
+                    if (dto.getImagemBase64() != null) {
+                        produtoExistente.setImagemBase64(dto.getImagemBase64());
+                    }
+                    produtoExistente.setAtivo(true);
 
-        Produto salvo = repository.save(produto);
+                    Produto atualizado = repository.save(produtoExistente);
+                    return new ProdutoResponse(atualizado);
+                })
+                .orElseGet(() -> {
+                    Produto produto = new Produto();
+                    produto.setNome(nomeNormalizado);
+                    produto.setDescricao(dto.getDescricao());
+                    produto.setPreco(dto.getPreco());
+                    produto.setCategoria(dto.getCategoria());
+                    produto.setImagemBase64(dto.getImagemBase64());
+                    produto.setAtivo(true);
 
-        return new ProdutoResponse(salvo);
+                    Produto salvo = repository.save(produto);
+                    return new ProdutoResponse(salvo);
+                });
     }
 
     public List<ProdutoResponse> listarAtivos() {
@@ -47,13 +61,15 @@ public class ProdutoService {
     public ProdutoResponse atualizar(Long id, ProdutoRequest dto) {
         Produto existente = buscarEntidadePorId(id);
 
-        existente.setNome(dto.getNome());
+        existente.setNome(dto.getNome().trim());
         existente.setDescricao(dto.getDescricao());
         existente.setPreco(dto.getPreco());
         existente.setCategoria(dto.getCategoria());
+        if (dto.getImagemBase64() != null) {
+            existente.setImagemBase64(dto.getImagemBase64());
+        }
 
         Produto atualizado = repository.save(existente);
-
         return new ProdutoResponse(atualizado);
     }
 

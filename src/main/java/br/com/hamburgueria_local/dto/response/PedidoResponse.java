@@ -1,123 +1,168 @@
 package br.com.hamburgueria_local.dto.response;
 
+import br.com.hamburgueria_local.enums.PerfilUsuario;
+import br.com.hamburgueria_local.enums.StatusPedido;
+import br.com.hamburgueria_local.enums.TipoPedido;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import br.com.hamburgueria_local.enums.StatusPedido;
-import br.com.hamburgueria_local.enums.TipoPedido;
-
 public class PedidoResponse {
 
-	private Long id;
-	private Long clienteId;
-	private StatusPedido status;
-	private TipoPedido tipoPedido;
-	private BigDecimal subtotal;
-	private BigDecimal desconto;
-	private BigDecimal valorTotal;
-	  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
-	private LocalDateTime dataCriacao;
-	private List<ItemPedidoResponse> itens;
-	private PagamentoResponse pagamento;
+    private Long id;
+    private Long usuarioId;
+    private String usuarioNome;
+    private PerfilUsuario usuarioPerfil;
+    private StatusPedido status;
+    private TipoPedido tipoPedido;
+    private BigDecimal subtotal;
+    private BigDecimal desconto;
+    private BigDecimal valorTotal;
 
-	public PedidoResponse() {
-	}
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCriacao;
 
-	public PedidoResponse(Long id, Long clienteId, StatusPedido status, TipoPedido tipoPedido,
-			BigDecimal subtotal, BigDecimal desconto, BigDecimal valorTotal, LocalDateTime dataCriacao,
-			List<ItemPedidoResponse> itens, PagamentoResponse pagamento) {
-		this.id = id;
-		this.clienteId = clienteId;
-		this.status = status;
-		this.tipoPedido = tipoPedido;
-		this.subtotal = subtotal;
-		this.desconto = desconto;
-		this.valorTotal = valorTotal;
-		this.dataCriacao = dataCriacao;
-		this.itens = itens;
-		this.pagamento = pagamento;
-	}
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataAtualizacao;
 
-	public Long getId() {
-		return id;
-	}
+    private String observacao;
+    private List<ItemPedidoResponse> itens;
+    private PagamentoResponse pagamento;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public PedidoResponse() {
+    }
 
-	public Long getClienteId() {
-		return clienteId;
-	}
+    public PedidoResponse(Long id, Long usuarioId, String usuarioNome, PerfilUsuario usuarioPerfil,
+                          StatusPedido status, TipoPedido tipoPedido, BigDecimal subtotal, BigDecimal desconto,
+                          BigDecimal valorTotal, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao,
+                          String observacao, List<ItemPedidoResponse> itens, PagamentoResponse pagamento) {
+        this.id = id;
+        this.usuarioId = usuarioId;
+        this.usuarioNome = usuarioNome;
+        this.usuarioPerfil = usuarioPerfil;
+        this.status = status;
+        this.tipoPedido = tipoPedido;
+        this.subtotal = subtotal;
+        this.desconto = desconto;
+        this.valorTotal = valorTotal;
+        this.dataCriacao = dataCriacao;
+        this.dataAtualizacao = dataAtualizacao;
+        this.observacao = observacao;
+        this.itens = itens;
+        this.pagamento = pagamento;
+    }
 
-	public void setClienteId(Long clienteId) {
-		this.clienteId = clienteId;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public StatusPedido getStatus() {
-		return status;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setStatus(StatusPedido status) {
-		this.status = status;
-	}
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
 
-	public TipoPedido getTipoPedido() {
-		return tipoPedido;
-	}
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 
-	public void setTipoPedido(TipoPedido tipoPedido) {
-		this.tipoPedido = tipoPedido;
-	}
+    public String getUsuarioNome() {
+        return usuarioNome;
+    }
 
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
+    public void setUsuarioNome(String usuarioNome) {
+        this.usuarioNome = usuarioNome;
+    }
 
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
+    public PerfilUsuario getUsuarioPerfil() {
+        return usuarioPerfil;
+    }
 
-	public BigDecimal getDesconto() {
-		return desconto;
-	}
+    public void setUsuarioPerfil(PerfilUsuario usuarioPerfil) {
+        this.usuarioPerfil = usuarioPerfil;
+    }
 
-	public void setDesconto(BigDecimal desconto) {
-		this.desconto = desconto;
-	}
+    public StatusPedido getStatus() {
+        return status;
+    }
 
-	public BigDecimal getValorTotal() {
-		return valorTotal;
-	}
+    public void setStatus(StatusPedido status) {
+        this.status = status;
+    }
 
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal = valorTotal;
-	}
+    public TipoPedido getTipoPedido() {
+        return tipoPedido;
+    }
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
-	}
+    public void setTipoPedido(TipoPedido tipoPedido) {
+        this.tipoPedido = tipoPedido;
+    }
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
 
-	public List<ItemPedidoResponse> getItens() {
-		return itens;
-	}
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
 
-	public void setItens(List<ItemPedidoResponse> itens) {
-		this.itens = itens;
-	}
+    public BigDecimal getDesconto() {
+        return desconto;
+    }
 
-	public PagamentoResponse getPagamento() {
-		return pagamento;
-	}
+    public void setDesconto(BigDecimal desconto) {
+        this.desconto = desconto;
+    }
 
-	public void setPagamento(PagamentoResponse pagamento) {
-		this.pagamento = pagamento;
-	}
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public List<ItemPedidoResponse> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedidoResponse> itens) {
+        this.itens = itens;
+    }
+
+    public PagamentoResponse getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(PagamentoResponse pagamento) {
+        this.pagamento = pagamento;
+    }
 }

@@ -1,5 +1,7 @@
 package br.com.hamburgueria_local.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,13 +44,26 @@ public class PagamentoService {
             .orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
         p.setPedido(pedido);
 
-        p.setFormaPagamento(r.getFormaPagamento());
-        p.setValorPago(r.getValorPago());
-        p.setTrocoPara(r.getTrocoPara());
+        BigDecimal totalPedido = pedido.getTotal() != null ? pedido.getTotal() : BigDecimal.ZERO;
+        BigDecimal valorPago = r.getValorPago() != null ? r.getValorPago() : totalPedido;
+        BigDecimal trocoPara = r.getTrocoPara();
+        BigDecimal troco = BigDecimal.ZERO;
 
-        // TODO: calcular o troco aqui (ou em um metodo separado)
-        // TODO: definir o statusPagamento
-        // TODO: definir a dataPagamento
+        if (r.getFormaPagamento() == FormaPagamento.DINHEIRO && trocoPara != null) {
+            troco = trocoPara.subtract(totalPedido);
+            if (troco.compareTo(BigDecimal.ZERO) < 0) {
+                troco = BigDecimal.ZERO;
+            }
+        } else {
+            trocoPara = null;
+        }
+
+        p.setFormaPagamento(r.getFormaPagamento());
+        p.setValorPago(valorPago);
+        p.setTrocoPara(trocoPara);
+        p.setTroco(troco);
+        p.setStatusPagamento(StatusPagamento.PAGO);
+        p.setDataPagamento(LocalDateTime.now());
 
         return p;
     }

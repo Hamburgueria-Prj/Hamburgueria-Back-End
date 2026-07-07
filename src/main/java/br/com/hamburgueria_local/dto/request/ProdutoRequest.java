@@ -24,6 +24,8 @@ public class ProdutoRequest {
     @NotNull(message = "A categoria é obrigatória")
     private CategoriaProduto categoria;
 
+    private String imagemBase64;
+
     public ProdutoRequest() {
     }
 
@@ -32,6 +34,14 @@ public class ProdutoRequest {
         this.descricao = descricao;
         this.preco = preco;
         this.categoria = categoria;
+    }
+
+    public ProdutoRequest(String nome, String descricao, BigDecimal preco, CategoriaProduto categoria, String imagemBase64) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.categoria = categoria;
+        this.imagemBase64 = imagemBase64;
     }
 
     public String getNome() {
@@ -67,5 +77,13 @@ public class ProdutoRequest {
 
     public void setCategoria(CategoriaProduto categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImagemBase64() {
+        return imagemBase64;
+    }
+
+    public void setImagemBase64(String imagemBase64) {
+        this.imagemBase64 = imagemBase64;
     }
 }
